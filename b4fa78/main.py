@@ -1,25 +1,16 @@
 """
-Blink the onboard LED
-
-This MicroPython script controls an on-board LED by repeatedly
-switching it on and off. It serves as a simple example of 
-how to control an output pin of a microcontroller.
-
-Components:
-- ESP32-based board
-- LED connected to GPIO2 (on-board)
-
-Instructions:
-1. Run the script
-2. Stop the code execution by pressing `Ctrl+C` key
-
-Authors:
-- Wokwi
-- Tomas Fryza
-
-Creation date: 2023-06-12
-Last modified: 2024-11-02
+Vikasred
 """
+
+##########################################################################
+from ota import OTAUpdater
+from WIFI_CONFIG import WIFI_SSID, WIFI_PSWD
+
+firmware_url = "https://github.com/vikaspac/ESP32_OTA_FW/blob/main/b4fa78/"
+ota_updater = OTAUpdater(WIFI_SSID, WIFI_PSWD, firmware_url, "main.py")
+ota_updater.download_and_install_update_if_available()
+##########################################################################
+
 
 # Import the `Pin` class from the `machine` module to access hardware
 from machine import Pin
