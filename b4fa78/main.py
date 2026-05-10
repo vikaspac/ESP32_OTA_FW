@@ -38,10 +38,10 @@ try:
         # time.sleep(0.5)
         led.on()
         print(f"LED ON")
-        time.sleep(1)
+        time.sleep(0.5)
         led.off()
         print(f"LED OFF")
-        time.sleep(1)
+        time.sleep(0.5)
 
 except KeyboardInterrupt:
     # This part runs when Ctrl+C is pressed
