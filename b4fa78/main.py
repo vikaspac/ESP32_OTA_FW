@@ -1,72 +1,47 @@
 """
-Vikasred
+Blink the onboard LED
+
+This MicroPython script controls an on-board LED by repeatedly
+switching it on and off. It serves as a simple example of 
+how to control an output pin of a microcontroller.
+
+Components:
+- ESP32-based board
+- LED connected to GPIO2 (on-board)
+
+Instructions:
+1. Run the script
+2. Stop the code execution by pressing `Ctrl+C` key
+
+Authors:
+- Wokwi
+- Tomas Fryza
+
+Creation date: 2023-06-12
+Last modified: 2024-11-02
 """
 
-from machine import Timer
+# Import the `Pin` class from the `machine` module to access hardware
 from machine import Pin
+import time
 
 
-def toggleLed(t):
-    led.value(not led.value())
-    print(f"toggleLed led value {led.value()}")
-
-
-
-def handleInterrupt(t):
-    global counter
-    counter += 1
-    print(f"Timer1 interrupted {counter} time(s)")
-
-
+# Initialize LED pin (e.g., GPIO2 for ESP32 board)
 led = Pin(2, Pin.OUT)
-counter = 0  # Global variable
 
-# Create a timer object
-tim0 = Timer(0)
-# Periodically invert LED value 5 times per second
-tim0.init(mode=Timer.PERIODIC,
-          freq=5,
-          callback=toggleLed)
-# Init function has three parameters:
-#   -- mode: PERIODIC (periodically) or ONE_SHOT (once)
-#   -- period or freq: Period in ms of frequency in Hz
-#   -- callback: Interrupt routine when timer is triggered
-
-# Periodically call function every two seconds
-tim1 = Timer(1)
-tim1.init(mode=Timer.PERIODIC,
-          freq=.5,
-          callback=handleInterrupt)
-
-# Print info just ones after 5_000 millisecs
-tim2 = Timer(2)
-tim2.init(mode=Timer.ONE_SHOT,
-          period=5000,
-          callback=lambda t:print(f"{t} callback"))
-# A lambda function is defined without a name and evaluates and
-# returns only one expression.
-# Syntax
-#   lambda param(s): expression
-#   -- lambda: analog of `def` in normal functions
-#   -- param(s): argument(s) just like normal function
-#   -- expression: code being executed, ideally a single-line
-
-# Stop and disable Timer1 peripheral after 10 secs
-tim3 = Timer(3)
-tim3.init(mode=Timer.ONE_SHOT,
-          period=10000,
-          callback=lambda t:tim1.deinit())
-
-print("Timer 0 set to `PERIODIC, freq=5 Hz`")
-print("Timer 1 set to `PERIODIC, freq=1/2 Hz`")
-print("Timer 2 set to `ONE_SHOT, period=5_000 ms`")
-print("Timer 3 set to `ONE_SHOT, period=10_000 ms`")
-
-print(f"Press `Ctrl+C` to stop")
+print(f"Start blinking {led}. Press `Ctrl+C` to stop")
 
 try:
+    # Forever loop to blink the LED
     while True:
-        pass
+        # led.value(not led.value())
+        # time.sleep(0.5)
+        led.on()
+        print(f"LED ON")
+        time.sleep(1)
+        led.off()
+        print(f"LED OFF")
+        time.sleep(1)
 
 except KeyboardInterrupt:
     # This part runs when Ctrl+C is pressed
@@ -74,7 +49,3 @@ except KeyboardInterrupt:
 
     # Optional cleanup code
     led.off()
-    tim0.deinit()
-    tim1.deinit()
-    tim2.deinit()
-    tim3.deinit()
