@@ -21,20 +21,21 @@ Creation date: 2023-06-12
 Last modified: 2024-11-02
 """
 
-##########################################################################
+#OTA imports
 from ota import OTAUpdater
 from WIFI_CONFIG import WIFI_SSID, WIFI_PSWD
-
-try:
-    firmware_url = "https://github.com/vikaspac/ESP32_OTA_FW/tree/main/b4fa78/"
-    ota_updater = OTAUpdater(WIFI_SSID, WIFI_PSWD, firmware_url, "main.py")
-    ota_updater.download_and_install_update_if_available()
-##########################################################################
-
 
 # Import the `Pin` class from the `machine` module to access hardware
 from machine import Pin
 import time
+
+######################################################################################################
+try:
+    firmware_url = "https://github.com/vikaspac/ESP32_OTA_FW/tree/main/b4fa78/"
+    ota_updater = OTAUpdater(WIFI_SSID, WIFI_PSWD, firmware_url, "main.py")
+    ota_updater.download_and_install_update_if_available()
+######################################################################################################
+
 
 # Initialize LED pin (e.g., GPIO2 for ESP32 board)
 led = Pin(2, Pin.OUT)
